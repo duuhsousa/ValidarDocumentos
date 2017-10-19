@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\FIC\\Desktop\\ValidarCPF\\ValidarCPF.csproj",
+      "projectUniqueName": "c:\\Users\\FIC\\Desktop\\BackA\\Week_3\\ValidarDocumentos\\ValidarCPF.csproj",
       "projectName": "ValidarCPF",
-      "projectPath": "c:\\Users\\FIC\\Desktop\\ValidarCPF\\ValidarCPF.csproj",
+      "projectPath": "c:\\Users\\FIC\\Desktop\\BackA\\Week_3\\ValidarDocumentos\\ValidarCPF.csproj",
       "packagesPath": "C:\\Users\\FIC\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\FIC\\Desktop\\ValidarCPF\\obj\\",
+      "outputPath": "c:\\Users\\FIC\\Desktop\\BackA\\Week_3\\ValidarDocumentos\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

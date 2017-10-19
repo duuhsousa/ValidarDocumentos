@@ -10,10 +10,12 @@ namespace ValidarCPF
         static int[] chaveCNPJ = {5,4,3,2,9,8,7,6,5,4,3,2};
         static int[] chaveCNPJ2 = {6,5,4,3,2,9,8,7,6,5,4,3,2};
         static int[] chaveCredito = {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2};
+        static int[] chaveRG = {9,8,7,6,5,4,3,2};
         static string doc, op2;
         static string tempdoc;
         static int soma = 0, resto = 0;
         static Regex rgx = new Regex(@"^\d*$");
+        static Regex rgxRG = new Regex(@"^\d+?(x|X|\d+)$");
 
         static string primeiroDigito, segundoDigito;
 
@@ -21,9 +23,8 @@ namespace ValidarCPF
         {
             do
             {
-
+                
                 Console.WriteLine("\n\nEscolha uma das opções abaixo\n1 - Validar CPF\n2 - Validar CNPJ\n3 - Validar Cartão de Crédito\n4 - Validar RG\n5 - Validar Título Eleitoral\n0 - Sair");
-
                 do
                 {
                     op2 = Console.ReadLine();
@@ -35,15 +36,35 @@ namespace ValidarCPF
                     case "1": ValidarCPF(); break;
                     case "2": ValidarCNPJ(); break;
                     case "3": ValidarCredito(); break;
-                    case "4": //ListarRespostas(); break;
+                    case "4": ValidarRG(); break;
                     case "5": Environment.Exit(0); break;
                 }
             } while (op2 != "0");
         }
 
+        private static void ValidarRG()
+        {
+            do
+            {
+                Console.Write("Digite seu RG: ");
+                doc = Console.ReadLine();
+            } while (doc.Length != 9 || !rgxRG.IsMatch(doc));
+
+            primeiroDigito = ValidaDigito(chaveRG,4);
+            if (doc.ToUpper().EndsWith(primeiroDigito))
+            {
+                Console.Clear();
+                Console.WriteLine("\n\nRG válido!");
+            }
+            else{
+                Console.Clear();
+                Console.WriteLine("\n\nRG inválido!");
+            }
+        }
+
         private static void ValidarCredito()
         {
-             do
+            do
             {
                 Console.Write("Digite o numero do seu Cartao: ");
                 doc = Console.ReadLine();
@@ -51,7 +72,7 @@ namespace ValidarCPF
 
             primeiroDigito = ValidaDigito(chaveCredito,3);
 
-             if (doc.EndsWith(primeiroDigito))
+            if (doc.EndsWith(primeiroDigito))
             {
                 Console.WriteLine("Cartão válido!");
             }
@@ -97,10 +118,9 @@ namespace ValidarCPF
             tempdoc = doc.Substring(0,chave.Length);
 
             for(int i=0;i<chave.Length;i++){
-                if(tipoDoc==1 || tipoDoc==2){
+                if(tipoDoc==1 || tipoDoc==2 || tipoDoc==4){
                     soma += Convert.ToInt16(tempdoc[i].ToString())*chave[i];
-                }else
-                if(tipoDoc==3){
+                }else if(tipoDoc==3){
                     if(Convert.ToInt16(tempdoc[i].ToString())*chave[i]>9){
                         soma += (Convert.ToInt16(tempdoc[i].ToString())*chave[i])-9;
                     }
@@ -108,9 +128,16 @@ namespace ValidarCPF
                         soma += Convert.ToInt16(tempdoc[i].ToString())*chave[i];
                 }
             }
-            if(tipoDoc==1 || tipoDoc==2){
+            if(tipoDoc==1 || tipoDoc==2 || tipoDoc==4){
                 resto = soma % 11;
-                if(resto<2){
+                if (resto == 10 && tipoDoc==4){
+                    return "X";
+                }
+                else if(resto < 10 && tipoDoc==4){
+                    return resto.ToString();
+                }
+                else if(resto<2)
+                {
                     return "0";        
                 }
                 else
